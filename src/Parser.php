@@ -44,18 +44,18 @@ class Parser {
    * @param \Psr\Http\Message\StreamInterface $input
    *   The input stream to parse.
    *
-   * @return mixed
-   *   TODO.
+   * @return object
+   *   An object representation of the parsed message.
    */
-  public function parse(StreamInterface $input) {
+  public function parse(StreamInterface $input): object {
     $stream = $this->lexer->analyze($input);
 
-    $tags = $this->parseTags($stream);
-    $source = $this->parseSource($stream);
-    $command = $this->parseCommand($stream);
-    $parameters = $this->parseParameters($stream);
-
-    eval(\Psy\sh());
+    return (object) [
+      'tags' => $this->parseTags($stream),
+      'source' => $this->parseSource($stream),
+      'command' => $this->parseCommand($stream),
+      'parameters' => $this->parseParameters($stream),
+    ];
   }
 
 }
