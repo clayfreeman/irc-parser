@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace ClayFreeman\IRCParser\Parser\Value;
 
 /**
- * Represents a single IRCv3 lexeme.
+ * Represents a single IRCv3 tag.
  */
 class Tag {
 
