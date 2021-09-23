@@ -38,12 +38,12 @@ class Lexer {
    * generator result.
    *
    * @param \Psr\Http\Message\StreamInterface $input
-   *   The input stream from which to produce a sequence of lexemes.
+   *   The input stream from which to produce a lexeme stream.
    *
-   * @return \CachingIterator|\ClayFreeman\IRCParser\Lexeme[]
-   *   A sequence of lexemes from the input stream.
+   * @return \ClayFreeman\IRCParser\LexemeStream
+   *   A lexeme stream resulting from the lexical analysis.
    */
-  public function analyze(StreamInterface $input): \CachingIterator {
+  public function analyze(StreamInterface $input): LexemeStream {
     // Trim any leading 0x20 bytes from the front of the input stream.
     $this->consumeSpace($input);
 
@@ -62,8 +62,8 @@ class Lexer {
       }
     }
 
-    // Use a caching iterator to provide the resulting token stream.
-    return new \CachingIterator(new \ArrayIterator($lexemes ?? []), 0);
+    // Create a lexeme stream from the resulting list of lexemes.
+    return new LexemeStream($lexemes ?? []);
   }
 
 }
