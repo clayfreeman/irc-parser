@@ -14,7 +14,7 @@ class LexemeStream {
    *
    * @var \ClayFreeman\IRCParser\Lexeme[]
    */
-  protected $lexemes = [];
+  protected array $lexemes = [];
 
   /**
    * Constructs a LexemeStream object.
