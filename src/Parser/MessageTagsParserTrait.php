@@ -16,7 +16,7 @@ trait MessageTagsParserTrait {
   use BaseParserTrait;
 
   /**
-   * Parse a tag from the supplied lexeme stream.
+   * Parse a tag from the supplied stream.
    *
    * This method expects that the presence of a tag has been established prior
    * to being invoked. This can be done by ensuring that the next lexeme token
@@ -56,7 +56,7 @@ trait MessageTagsParserTrait {
   }
 
   /**
-   * Attempt to parse a tag list from the supplied lexeme stream.
+   * Attempt to parse a tag list from the supplied stream.
    *
    * If no tag list is present, this method will produce an empty tag list.
    *

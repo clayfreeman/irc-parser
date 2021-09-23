@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace ClayFreeman\IRCParser;
 
+use ClayFreeman\IRCParser\Parser\MessageCommandParserTrait;
+use ClayFreeman\IRCParser\Parser\MessageParametersParserTrait;
+use ClayFreeman\IRCParser\Parser\MessageSourceParserTrait;
 use ClayFreeman\IRCParser\Parser\MessageTagsParserTrait;
 
 use Psr\Http\Message\StreamInterface;
@@ -13,6 +16,9 @@ use Psr\Http\Message\StreamInterface;
  */
 class Parser {
 
+  use MessageCommandParserTrait;
+  use MessageParametersParserTrait;
+  use MessageSourceParserTrait;
   use MessageTagsParserTrait;
 
   /**
@@ -45,6 +51,9 @@ class Parser {
     $stream = $this->lexer->analyze($input);
 
     $tags = $this->parseTags($stream);
+    $source = $this->parseSource($stream);
+    $command = $this->parseCommand($stream);
+    $parameters = $this->parseParameters($stream);
 
     eval(\Psy\sh());
   }
