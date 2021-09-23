@@ -71,7 +71,8 @@ trait MessageTagsParserTrait {
 
     $tokens = [Token::Tag, Token::TagPrefixClient];
     while (in_array($stream->peek()?->token, $tokens, TRUE)) {
-      $tags[] = $this->parseTag($stream);
+      $tag = $this->parseTag($stream);
+      $tags[$tag->name()] = $tag;
     }
 
     return $tags;
