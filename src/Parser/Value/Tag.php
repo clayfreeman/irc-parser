@@ -42,15 +42,21 @@ class Tag {
   /**
    * Gets the fully-qualified name of the tag.
    *
-   * If a vendor is specified, the fully-qualified name of the tag will follow
-   * the format "<vendor>/<name>". In all other cases, the fully-qualified name
-   * is exactly the same as the base name.
+   * The fully-qualified name contains the client-only prefix (if applicable),
+   * followed by an optional vendor name, followed by the base name of the tag.
    *
    * @return string
    *   The fully-qualified name of the tag.
    */
   public function name(): string {
-    return isset($this->vendor) ? "{$this->vendor}/{$this->name}" : $this->name;
+    $prefix = $this->clientOnly ? '+' : '';
+
+    $name = $this->name;
+    if (isset($this->vendor)) {
+      $name = "{$this->vendor}/{$this->name}";
+    }
+
+    return $prefix . $name;
   }
 
   /**
@@ -62,11 +68,9 @@ class Tag {
   public function render(): string {
     $render = '';
 
-    $prefix = $this->clientOnly ? '+' : '';
-    $suffix = is_string($this->value) ? "={$this->value}" : '';
-
     if ($this->value !== FALSE) {
-      $render = $prefix . $this->name() . $suffix;
+      $suffix = is_string($this->value) ? "={$this->value}" : '';
+      $render = $this->name() . $suffix;
     }
 
     return $render;
