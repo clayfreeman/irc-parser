@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace ClayFreeman\IRCParser\Parser;
 
+use ClayFreeman\IRCParser\Lexeme;
 use ClayFreeman\IRCParser\LexemeStream;
 use ClayFreeman\IRCParser\Token;
 

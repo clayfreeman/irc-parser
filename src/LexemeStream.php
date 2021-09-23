@@ -29,15 +29,18 @@ class LexemeStream {
   /**
    * Consumes a lexeme from the front of the stream.
    *
-   * @return \ClayFreeman\IRCParser\Lexeme|null
-   *   A lexeme from the front of the stream, or NULL if the stream is empty.
+   * @return \ClayFreeman\IRCParser\Lexeme
+   *   A lexeme from the front of the stream.
+   *
+   * @throws \UnderflowException
+   *   If the stream is empty.
    */
-  public function consume(): ?Lexeme {
+  public function consume(): Lexeme {
     if ($lexeme = array_shift($this->lexemes)) {
       return $lexeme;
     }
 
-    return NULL;
+    throw new \UnderflowException();
   }
 
   /**
