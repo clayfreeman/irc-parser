@@ -68,7 +68,7 @@ class Tag {
   public function render(): string {
     $render = '';
 
-    if ($this->value !== FALSE) {
+    if ($this->value !== FALSE && strlen($this->value) !== 0) {
       $suffix = is_string($this->value) ? "={$this->value}" : '';
       $render = $this->name() . $suffix;
     }
