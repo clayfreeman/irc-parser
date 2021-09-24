@@ -44,16 +44,6 @@ class LexemeStream {
   }
 
   /**
-   * Check if the lexeme stream is empty.
-   *
-   * @return bool
-   *   TRUE if the stream is empty, false otherwise.
-   */
-  public function empty(): bool {
-    return count($this->lexemes) === 0;
-  }
-
-  /**
    * Peek at the first lexeme in the stream.
    *
    * @return \ClayFreeman\IRCParser\Lexeme|null
