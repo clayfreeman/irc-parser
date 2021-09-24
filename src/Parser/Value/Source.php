@@ -76,14 +76,16 @@ class Source {
   /**
    * Renders the message source in the format specified by IRCv3.
    *
+   * If a user is set without a host, only the principal will be rendered.
+   *
    * @return string
    *   The message source rendered in the format specified by IRCv3.
    */
   public function render(): string {
-    $suffix = isset($this->host) ? "@{$this->host}" : '';
-    $suffix = isset($this->user) ? "!{$this->user}@{$this->host}" : $suffix;
+    $user = isset($this->user, $this->host) ? "!{$this->user}" : '';
+    $host = isset($this->host) ? "@{$this->host}" : '';
 
-    return $this->principal . $suffix;
+    return $this->principal . $user . $host;
   }
 
 }
