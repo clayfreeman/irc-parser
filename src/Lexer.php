@@ -44,9 +44,6 @@ class Lexer {
    *   A lexeme stream resulting from the lexical analysis.
    */
   public function analyze(StreamInterface $input): LexemeStream {
-    // Trim any leading 0x20 bytes from the front of the input stream.
-    $this->consumeSpace($input);
-
     // Define the grammatical structure of IRCv3 messages.
     $lexeme_generators = [
       $this->analyzeTags($input),
