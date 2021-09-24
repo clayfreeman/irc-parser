@@ -30,7 +30,7 @@ trait MessageCommandAnalysisTrait {
    *   A lexeme representing the message command.
    */
   protected function analyzeCommand(StreamInterface $input): \Generator {
-    $result = $this->readUntil($input, [' '], 'expecting command or numeric');
+    $result = $this->readUntil($input, ' ', 'expecting command or numeric');
     yield new Lexeme(Token::Command, $result);
   }
 

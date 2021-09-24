@@ -33,14 +33,14 @@ trait MessageParametersAnalysisTrait {
    */
   protected function analyzeParameters(StreamInterface $input): \Generator {
     while (strlen($this->read($input, ' ')) > 0 && strlen($this->peek($input)) === 1) {
-      $delimiters = [' '];
+      $class = ' ';
 
       if ($this->peek($input) === ':') {
         $this->discard($input);
-        $delimiters = [];
+        $class = '';
       }
 
-      $result = $this->readUntil($input, $delimiters);
+      $result = $this->readUntil($input, $class);
       yield new Lexeme(Token::Parameter, $result);
     }
   }

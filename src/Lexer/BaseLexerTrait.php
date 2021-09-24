@@ -136,19 +136,22 @@ trait BaseLexerTrait {
   /**
    * Reads from the input stream until a delimiter or EOF is encountered.
    *
-   * The specified delimiters are not consumed when reading from the stream.
+   * The specified delimiter class is not consumed when reading from the stream.
+   * If an empty delimiter class is supplied, the entire remaining content of
+   * the stream will be returned.
    *
    * @param \Psr\Http\Message\StreamInterface $input
    *   The input stream from which to read.
-   * @param string[] $delimiters
-   *   One or more one-byte delimiters at which to stop reading from the stream.
+   * @param string $class
+   *   A string of zero or more one-byte delimiters at which to stop reading.
    * @param string|null $empty_error
    *   The error message to use if the result is empty (default: NULL).
    *
    * @return string
    *   The result of reading until a delimiter or EOF is encountered.
    */
-  protected function readUntil(StreamInterface $input, array $delimiters, ?string $empty_error = NULL): string {
+  protected function readUntil(StreamInterface $input, string $class, ?string $empty_error = NULL): string {
+    $delimiters = str_split($class);
     $result = '';
 
     while (strlen($next = $this->peek($input)) === 1 && !in_array($next, $delimiters, TRUE)) {

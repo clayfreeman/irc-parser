@@ -70,7 +70,7 @@ trait MessageTagsAnalysisTrait {
     // - name delimiter (byte '/').
     // - end of tag delimiter (byte ';').
     // - value delimiter (byte '=').
-    $result = $this->readUntil($input, [' ', '/', ';', '='], 'expecting tag vendor or tag name');
+    $result = $this->readUntil($input, ' /;=', 'expecting tag vendor or tag name');
     yield new Lexeme(Token::Tag, $result);
 
     // Check if the next byte in the input stream is the tag name delimiter.
@@ -82,7 +82,7 @@ trait MessageTagsAnalysisTrait {
       // - end of tag list delimiter (byte 0x20).
       // - end of tag delimiter (byte ';').
       // - value delimiter (byte '=').
-      $result = $this->readUntil($input, [' ', ';', '='], 'expecting tag name');
+      $result = $this->readUntil($input, ' ;=', 'expecting tag name');
       yield new Lexeme(Token::TagName, $result);
     }
   }
@@ -104,7 +104,7 @@ trait MessageTagsAnalysisTrait {
     // - NUL (byte 0x00)
     // - end of tag list delimiter (byte 0x20).
     // - end of tag delimiter (byte ';').
-    $result = $this->readUntil($input, [chr(0), ' ', ';']);
+    $result = $this->readUntil($input, "\0 ;");
     yield new Lexeme(Token::TagValue, $result);
   }
 

@@ -57,7 +57,7 @@ trait MessageSourceAnalysisTrait {
     $this->discard($input);
 
     // Read until the end of source delimiter (byte 0x20).
-    $result = $this->readUntil($input, [' '], 'expecting source host');
+    $result = $this->readUntil($input, ' ', 'expecting source host');
     yield new Lexeme(Token::SourceHost, $result);
   }
 
@@ -108,7 +108,7 @@ trait MessageSourceAnalysisTrait {
     // - end of source delimiter (byte 0x20).
     // - user delimiter (byte '!').
     // - host delimiter (byte '@').
-    $result = $this->readUntil($input, [' ', '!', '@'], 'expecting source');
+    $result = $this->readUntil($input, ' !@', 'expecting source');
     yield new Lexeme(Token::Source, $result);
   }
 
@@ -128,7 +128,7 @@ trait MessageSourceAnalysisTrait {
     //
     // - end of source delimiter (byte 0x20).
     // - host delimiter (byte '@').
-    $result = $this->readUntil($input, [' ', '@'], 'expecting source user');
+    $result = $this->readUntil($input, ' @', 'expecting source user');
     yield new Lexeme(Token::SourceUser, $result);
 
     // Check if the next byte in the input stream is the host delimiter.
