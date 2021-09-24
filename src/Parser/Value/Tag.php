@@ -60,7 +60,27 @@ class Tag {
   }
 
   /**
+   * Gets the processed value of the tag.
+   *
+   * The IRCv3 message tag specification states that message tags with a string
+   * value of zero bytes should be treated as if they're not present, so this
+   * method will convert such values to FALSE since those should be ignored.
+   *
+   * @return bool|string
+   *   The processed value of the tag.
+   */
+  public function value(): bool|string {
+    if (is_string($this->value) && strlen($this->value) === 0) {
+      $this->value = FALSE;
+    }
+
+    return $this->value;
+  }
+
+  /**
    * Renders the tag in the format specified by IRCv3.
+   *
+   * If this tag's value is FALSE, nothing will be rendered.
    *
    * @return string
    *   The tag rendered in the format specified by IRCv3.
@@ -68,9 +88,12 @@ class Tag {
   public function render(): string {
     $render = '';
 
-    if ($this->value !== FALSE && strlen($this->value) !== 0) {
-      $suffix = is_string($this->value) ? "={$this->value}" : '';
-      $render = $this->name() . $suffix;
+    $name = $this->name();
+    $value = $this->value();
+
+    if ($value !== FALSE) {
+      $suffix = is_string($value) ? "={$value}" : '';
+      $render = $name . $suffix;
     }
 
     return $render;

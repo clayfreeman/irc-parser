@@ -8,6 +8,7 @@ use ClayFreeman\IRCParser\Parser\MessageCommandParserTrait;
 use ClayFreeman\IRCParser\Parser\MessageParametersParserTrait;
 use ClayFreeman\IRCParser\Parser\MessageSourceParserTrait;
 use ClayFreeman\IRCParser\Parser\MessageTagsParserTrait;
+use ClayFreeman\IRCParser\Parser\Value\Tag;
 
 use Psr\Http\Message\StreamInterface;
 
@@ -50,12 +51,20 @@ class Parser {
   public function parse(StreamInterface $input): object {
     $stream = $this->lexer->analyze($input);
 
-    return (object) [
+    $result = (object) [
       'tags' => $this->parseTags($stream),
       'source' => $this->parseSource($stream),
       'command' => $this->parseCommand($stream),
       'parameters' => $this->parseParameters($stream),
     ];
+
+    // The IRCv3 specification implies that tags with a FALSE value should be
+    // silently ignored. Filter those out here.
+    $result->tags = array_filter($result->tags, function (Tag $tag) {
+      return $tag->value() !== FALSE;
+    });
+
+    return $result;
   }
 
 }
