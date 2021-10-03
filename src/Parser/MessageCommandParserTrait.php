@@ -20,10 +20,10 @@ trait MessageCommandParserTrait {
    * @param \ClayFreeman\IRCParser\LexemeStream $stream
    *   The lexeme stream from which to parse a command.
    *
-   * @return string
-   *   The parsed command.
+   * @return int|string
+   *   The parsed numeric or command.
    */
-  protected function parseCommand(LexemeStream $stream): string {
+  protected function parseCommand(LexemeStream $stream): int|string {
     return $this->consume($stream, Token::Command)->value;
   }
 
